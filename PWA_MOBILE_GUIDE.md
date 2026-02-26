@@ -1,7 +1,7 @@
 # Speakly PWA & Mobile Guide
 
 ## Overview
-Speakly is now a fully functional Progressive Web App (PWA) with comprehensive mobile support. Users can install it on their devices and use it offline with automatic data syncing when online.
+Speakly is now also a fully functional Progressive Web App (PWA) with comprehensive mobile support. Users can install it on their devices and use it offline with automatic data syncing when online.
 
 ## PWA Features
 
