@@ -55,3 +55,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #444444; 
 }
+
+@layer utilities {
+  .touch-target {
+    @apply min-h-12 min-w-12 flex items-center justify-center;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    body {
+      font-size: 16px; /* Prevents auto zoom on input focus */
+    }
+  }
+}

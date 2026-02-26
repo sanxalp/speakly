@@ -143,19 +143,19 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
       {/* Mic Button */}
       {!parsedTask && (
-        <div className="flex flex-col items-center space-y-12">
+        <div className="flex flex-col items-center space-y-8 md:space-y-12">
           <button
             onClick={toggleRecording}
-            className={`relative group flex items-center justify-center w-36 h-36 rounded-full shadow-2xl transition-all duration-500 ${
+            className={`relative group flex items-center justify-center w-28 h-28 md:w-36 md:h-36 rounded-full shadow-2xl transition-all duration-500 ${
               isRecording
                 ? "bg-[#a8736b] hover:bg-[#b8836b] scale-110 animate-pulse"
                 : "bg-[#d4af37] hover:bg-[#e8c547] hover:scale-105 hover:shadow-[#d4af37]/30"
             }`}
           >
             {isRecording ? (
-              <Square className="w-14 h-14 text-[#0a0a0a] fill-current relative z-10" />
+              <Square className="w-10 h-10 md:w-14 md:h-14 text-[#0a0a0a] fill-current relative z-10" />
             ) : (
-              <Mic className="w-16 h-16 text-[#0a0a0a] relative z-10" />
+              <Mic className="w-12 h-12 md:w-16 md:h-16 text-[#0a0a0a] relative z-10" />
             )}
             
             {/* Ripple effect when recording */}
@@ -164,14 +164,14 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
             )}
           </button>
           
-          <p className="text-[#a8a8a8] font-light text-lg h-8 text-center tracking-wide">
+          <p className="text-[#a8a8a8] font-light text-base md:text-lg h-8 text-center tracking-wide">
             {isRecording ? "Listening..." : "Tap to speak"}
           </p>
 
           {/* Transcript Preview */}
           {(transcript || isRecording) && (
-            <div className="w-full p-8 bg-[#242424] border border-[#333333] rounded text-[#d4af37] text-center min-h-[6rem] flex items-center justify-center">
-              <span className="text-lg font-light italic">"{transcript || "…"}"</span>
+            <div className="w-full p-4 md:p-8 bg-[#242424] border border-[#333333] rounded text-[#d4af37] text-center min-h-[5rem] md:min-h-[6rem] flex items-center justify-center">
+              <span className="text-base md:text-lg font-light italic">"{transcript || "…"}"</span>
             </div>
           )}
         </div>
@@ -179,15 +179,15 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
 
       {/* Loading State */}
       {isProcessing && !parsedTask && (
-        <div className="flex flex-col items-center space-y-6 mt-12">
+        <div className="flex flex-col items-center space-y-4 md:space-y-6 mt-8 md:mt-12">
           <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
-          <p className="text-[#a8a8a8] animate-pulse font-light">Processing your task...</p>
+          <p className="text-[#a8a8a8] animate-pulse font-light text-sm md:text-base">Processing your task...</p>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="mt-6 p-5 bg-[#a8736b]/10 border border-[#a8736b]/30 text-[#d9a8a0] rounded w-full text-center text-sm flex items-center justify-between font-light">
+        <div className="mt-4 md:mt-6 p-4 md:p-5 bg-[#a8736b]/10 border border-[#a8736b]/30 text-[#d9a8a0] rounded w-full text-center text-xs md:text-sm flex items-center justify-between font-light">
           <span>{error}</span>
           <button onClick={() => setError(null)} className="underline hover:no-underline text-xs ml-4">Dismiss</button>
         </div>
@@ -195,55 +195,55 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
 
       {/* Review Card */}
       {parsedTask && !isProcessing && (
-        <div className="w-full bg-[#1a1a1a] border border-[#333333] rounded p-10 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
-          <div className="mb-8">
-            <h3 className="text-2xl font-light text-[#f5f5f5] mb-2">
+        <div className="w-full bg-[#1a1a1a] border border-[#333333] rounded p-6 md:p-10 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
+          <div className="mb-6 md:mb-8">
+            <h3 className="text-xl md:text-2xl font-light text-[#f5f5f5] mb-2">
               Review Task
             </h3>
             <div className="w-12 h-1 bg-[#d4af37]" />
           </div>
           
-          <div className="space-y-6">
+          <div className="space-y-5 md:space-y-6">
             <div>
-              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Title</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-2 md:mb-3 uppercase tracking-wide">Title</label>
               <input
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-2 md:py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light text-sm"
               />
             </div>
             
             <div>
-              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Description</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-2 md:mb-3 uppercase tracking-wide">Description</label>
               <textarea
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
-                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all min-h-[120px] font-light"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-2 md:py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all min-h-[100px] md:min-h-[120px] font-light text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Due Date & Time</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-2 md:mb-3 uppercase tracking-wide">Due Date & Time</label>
               <input
                 type="datetime-local"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
-                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light [color-scheme:dark]"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-2 md:py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light text-sm [color-scheme:dark]"
               />
             </div>
           </div>
 
-          <div className="flex gap-4 mt-10">
+          <div className="flex gap-3 md:gap-4 mt-6 md:mt-10 flex-col md:flex-row">
             <button
               onClick={() => { setParsedTask(null); setTranscript(""); }}
-              className="flex-1 bg-transparent border border-[#333333] hover:border-[#a8a8a8] text-[#a8a8a8] hover:text-[#f5f5f5] font-light py-3 rounded transition-all duration-300 flex items-center justify-center gap-2"
+              className="flex-1 bg-transparent border border-[#333333] hover:border-[#a8a8a8] text-[#a8a8a8] hover:text-[#f5f5f5] font-light py-2 md:py-3 rounded transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base"
             >
               <X className="w-4 h-4" /> Cancel
             </button>
             <button
               onClick={saveTask}
-              className="flex-1 bg-[#d4af37] hover:bg-[#e8c547] text-[#0a0a0a] font-light py-3 rounded transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#d4af37]/20 hover:shadow-[#d4af37]/30"
+              className="flex-1 bg-[#d4af37] hover:bg-[#e8c547] text-[#0a0a0a] font-light py-2 md:py-3 rounded transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#d4af37]/20 hover:shadow-[#d4af37]/30 text-sm md:text-base"
             >
               <Check className="w-4 h-4" /> Save Task
             </button>
