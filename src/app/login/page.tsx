@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { Mic, Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function AuthPage() {
   const supabase = createClient();
@@ -47,67 +48,78 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f12] flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Subtle background accent */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#d4af37]/3 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Hero Branding */}
-      <div className="relative mb-16 text-center space-y-6">
+      {/* Logo and Branding */}
+      <div className="relative mb-20 text-center space-y-8 z-10">
         <div className="flex justify-center">
-          <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 border border-emerald-500/20 flex items-center justify-center group hover:from-emerald-500/30 transition-all duration-300">
-            <div className="absolute inset-0 rounded-2xl bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur" />
-            <Mic className="text-emerald-400 w-12 h-12 relative z-10" />
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#d4af37]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <Image
+              src="/speakly-logo.jpg"
+              alt="Speakly"
+              width={80}
+              height={80}
+              className="relative z-10 rounded-2xl"
+              priority
+            />
           </div>
         </div>
-        <div className="space-y-2">
-          <h1 className="text-5xl font-bold text-[#f5f5f7] tracking-tight">Speakly</h1>
-          <p className="text-[#a8a8b0] max-w-sm text-lg leading-relaxed">
-            Speak your tasks. Let AI organize your day.
+        <div className="space-y-3">
+          <h1 className="text-6xl font-light text-[#f5f5f5] tracking-tight">Speakly</h1>
+          <p className="text-[#a8a8a8] max-w-sm text-base leading-relaxed font-light">
+            The art of organized productivity through voice
           </p>
         </div>
       </div>
 
       {/* Auth Card */}
-      <div className="w-full max-w-md bg-[#1a1a21] border border-[#3a3a47] rounded-2xl p-8 shadow-2xl relative">
-        <h2 className="text-2xl font-bold text-[#f5f5f7] mb-2">
-          {isSignUp ? "Create account" : "Welcome back"}
-        </h2>
-        <p className="text-[#a8a8b0] text-sm mb-6">
-          {isSignUp 
-            ? "Get started with voice-powered task management" 
-            : "Sign in to continue to your dashboard"}
-        </p>
+      <div className="w-full max-w-md bg-[#1a1a1a] border border-[#333333] rounded-lg p-10 shadow-2xl relative z-10">
+        <div className="mb-8">
+          <h2 className="text-3xl font-light text-[#f5f5f5] mb-2">
+            {isSignUp ? "Create Account" : "Welcome"}
+          </h2>
+          <div className="w-12 h-1 bg-[#d4af37]" />
+        </div>
         
+        <p className="text-[#a8a8a8] text-sm mb-8 font-light">
+          {isSignUp 
+            ? "Begin your journey with intelligent voice-powered task management" 
+            : "Access your personalized task dashboard"}
+        </p>
+
         {error && (
-          <div className="mb-6 p-4 bg-[#ef4444]/10 border border-[#ef4444]/20 rounded-lg text-[#fca5a5] text-sm">
+          <div className="mb-6 p-4 bg-[#a8736b]/10 border border-[#a8736b]/30 rounded-lg text-[#d9a8a0] text-sm font-light">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleAuth} className="space-y-4">
+        <form onSubmit={handleAuth} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-[#a8a8b0] mb-2">
-              Email address
+            <label className="block text-xs font-light text-[#a8a8a8] mb-2 uppercase tracking-wide">
+              Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all duration-200"
-              placeholder="you@example.com"
+              className="w-full bg-[#242424] border border-[#333333] rounded-md px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 font-light"
+              placeholder="your@email.com"
               required
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-[#a8a8b0] mb-2">
+            <label className="block text-xs font-light text-[#a8a8a8] mb-2 uppercase tracking-wide">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all duration-200"
+              className="w-full bg-[#242424] border border-[#333333] rounded-md px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all duration-300 font-light"
               placeholder="••••••••"
               required
             />
@@ -116,34 +128,34 @@ export default function AuthPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg px-4 py-3 transition-all duration-200 flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-emerald-500/20"
+            className="w-full bg-[#d4af37] hover:bg-[#e8c547] text-[#0a0a0a] font-light rounded-md px-4 py-3 transition-all duration-300 flex items-center justify-center gap-2 mt-6 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-[#d4af37]/20"
           >
             {loading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               <>
-                {isSignUp ? "Create account" : "Sign in"}
+                {isSignUp ? "Create Account" : "Sign In"}
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-6 text-center border-t border-[#3a3a47] pt-6">
+        <div className="mt-8 text-center border-t border-[#333333] pt-6">
           <button
             onClick={() => setIsSignUp(!isSignUp)}
-            className="text-[#a8a8b0] hover:text-[#f5f5f7] transition-colors text-sm font-medium"
+            className="text-[#a8a8a8] hover:text-[#d4af37] transition-colors text-sm font-light"
           >
             {isSignUp
               ? "Already have an account? Sign in"
-              : "Don't have an account? Sign up"}
+              : "Don't have an account? Create one"}
           </button>
         </div>
       </div>
 
-      {/* Footer hint */}
-      <p className="text-[#6f7178] text-xs mt-8">
-        Voice recognition works best in Chrome, Edge, or Safari
+      {/* Footer */}
+      <p className="text-[#707070] text-xs mt-12 font-light">
+        Optimized for Chrome, Edge, and Safari
       </p>
     </div>
   );

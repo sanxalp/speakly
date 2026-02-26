@@ -48,12 +48,12 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center p-12 bg-[#262630] border border-[#3a3a47] rounded-xl flex flex-col items-center">
-        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-          <CheckCircle2 className="w-8 h-8 text-emerald-500/50" />
+      <div className="text-center p-16 bg-[#242424] border border-[#333333] rounded flex flex-col items-center">
+        <div className="w-16 h-16 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/20 flex items-center justify-center mb-6">
+          <CheckCircle2 className="w-8 h-8 text-[#d4af37]/50" />
         </div>
-        <h3 className="text-xl font-semibold text-[#f5f5f7] mb-2">All caught up!</h3>
-        <p className="text-[#a8a8b0]">You have no tasks currently. Use the microphone above to add one.</p>
+        <h3 className="text-xl font-light text-[#f5f5f5] mb-3">All caught up</h3>
+        <p className="text-[#a8a8a8] font-light">Use the microphone to add a new task.</p>
       </div>
     );
   }
@@ -69,11 +69,11 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
         return (
           <div 
             key={task.id} 
-            className={`p-6 rounded-xl border transition-all group ${
-              isCompleted ? "bg-emerald-500/5 border-emerald-500/20" :
-              isCancelled ? "bg-[#262630]/50 border-[#3a3a47] opacity-60" :
-              isOverdue ? "bg-[#f59e0b]/5 border-[#f59e0b]/30" :
-              "bg-[#1a1a21] border-[#3a3a47] hover:border-[#4a4a57]"
+            className={`p-6 rounded border transition-all group ${
+              isCompleted ? "bg-[#8b9f85]/5 border-[#8b9f85]/20" :
+              isCancelled ? "bg-[#242424]/60 border-[#333333] opacity-60" :
+              isOverdue ? "bg-[#c9a961]/5 border-[#c9a961]/30" :
+              "bg-[#1a1a1a] border-[#333333] hover:border-[#444444]"
             }`}
           >
             <div className="flex items-start gap-4">
@@ -85,31 +85,31 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                 className="mt-1 flex-shrink-0 focus:outline-none disabled:opacity-50"
               >
                 {isCompleted ? (
-                   <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+                   <CheckCircle2 className="w-6 h-6 text-[#8b9f85]" />
                 ) : (
-                   <Circle className="w-6 h-6 text-[#6f7178] group-hover:text-emerald-500 transition-colors" />
+                   <Circle className="w-6 h-6 text-[#707070] group-hover:text-[#d4af37] transition-colors" />
                 )}
               </button>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <h4 className={`text-base font-semibold truncate ${isCompleted || isCancelled ? "text-[#6f7178] line-through" : "text-[#f5f5f7]"}`}>
+                <h4 className={`text-base font-light truncate ${isCompleted || isCancelled ? "text-[#707070] line-through" : "text-[#f5f5f5]"}`}>
                   {task.title}
                 </h4>
                 
                 {task.description && (
-                  <p className={`mt-2 text-sm leading-relaxed ${isCompleted || isCancelled ? "text-[#6f7178]" : "text-[#a8a8b0]"}`}>
+                  <p className={`mt-2 text-sm leading-relaxed font-light ${isCompleted || isCancelled ? "text-[#707070]" : "text-[#a8a8a8]"}`}>
                     {task.description}
                   </p>
                 )}
                 
                 {/* Meta info row */}
-                <div className="flex flex-wrap items-center gap-3 mt-4 text-xs font-medium">
+                <div className="flex flex-wrap items-center gap-3 mt-4 text-xs font-light">
                   {hasDueDate && (
-                    <span className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md ${
-                        isCompleted ? "bg-[#262630] text-[#6f7178]" :
-                        isOverdue ? "bg-[#f59e0b]/10 text-[#fbbf24] border border-[#f59e0b]/30" :
-                        "bg-[#262630] text-[#a8a8b0] border border-[#3a3a47]"
+                    <span className={`flex items-center gap-1.5 px-3 py-1.5 rounded ${
+                        isCompleted ? "bg-[#242424] text-[#707070]" :
+                        isOverdue ? "bg-[#c9a961]/10 text-[#d9b875] border border-[#c9a961]/30" :
+                        "bg-[#242424] text-[#a8a8a8] border border-[#333333]"
                     }`}>
                       <Calendar className="w-4 h-4 flex-shrink-0" />
                       {format(parseISO(task.due_date!), "MMM d, h:mm a")}
@@ -118,14 +118,14 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                   )}
                   
                   {task.delay_count > 0 && (
-                    <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#06b6d4]/10 text-[#06b6d4] border border-[#06b6d4]/30">
+                    <span className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#7a9daa]/10 text-[#8db3c5] border border-[#7a9daa]/30 font-light">
                       <Clock className="w-4 h-4 flex-shrink-0" />
                       Delayed {task.delay_count}x
                     </span>
                   )}
 
                   {task.status === "CANCELLED" && (
-                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#ef4444]/10 text-[#fca5a5] border border-[#ef4444]/30">
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#a8736b]/10 text-[#c9a8a0] border border-[#a8736b]/30 font-light">
                           <XCircle className="w-4 h-4 flex-shrink-0" /> Cancelled
                       </span>
                   )}
@@ -139,7 +139,7 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                         onClick={() => handleDelay(task)}
                         disabled={loadingId === task.id}
                         title="Delay (Push back 1 day)"
-                        className="p-2 text-[#a8a8b0] hover:text-[#06b6d4] hover:bg-[#06b6d4]/10 rounded-lg transition-all duration-200 cursor-pointer"
+                        className="p-2 text-[#a8a8a8] hover:text-[#7a9daa] hover:bg-[#7a9daa]/10 rounded transition-all duration-200 cursor-pointer"
                     >
                         <Clock className="w-4 h-4" />
                     </button>
@@ -147,7 +147,7 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                         onClick={() => handleStatusChange(task.id, task.status, "CANCELLED")}
                         disabled={loadingId === task.id}
                         title="Cancel task"
-                        className="p-2 text-[#a8a8b0] hover:text-[#fca5a5] hover:bg-[#ef4444]/10 rounded-lg transition-all duration-200 cursor-pointer"
+                        className="p-2 text-[#a8a8a8] hover:text-[#c9a8a0] hover:bg-[#a8736b]/10 rounded transition-all duration-200 cursor-pointer"
                     >
                         <XCircle className="w-4 h-4" />
                     </button>
@@ -155,7 +155,7 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                         onClick={() => handleDelete(task.id)}
                         disabled={loadingId === task.id}
                         title="Delete task completely"
-                        className="p-2 text-[#a8a8b0] hover:text-[#ef4444] hover:bg-[#ef4444]/10 rounded-lg transition-all duration-200 cursor-pointer"
+                        className="p-2 text-[#a8a8a8] hover:text-[#a8736b] hover:bg-[#a8736b]/10 rounded transition-all duration-200 cursor-pointer"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>
@@ -167,7 +167,7 @@ export default function TaskList({ tasks, onTaskUpdate }: { tasks: Task[], onTas
                   <button 
                     onClick={() => handleStatusChange(task.id, task.status, "PENDING")}
                     disabled={loadingId === task.id}
-                    className="text-xs px-3 py-2 bg-[#262630] hover:bg-[#3a3a47] text-[#a8a8b0] rounded-lg transition-all duration-200 border border-[#3a3a47]"
+                    className="text-xs px-3 py-2 bg-[#242424] hover:bg-[#333333] text-[#a8a8a8] rounded transition-all duration-200 border border-[#333333] font-light"
                   >
                       Restore
                   </button>

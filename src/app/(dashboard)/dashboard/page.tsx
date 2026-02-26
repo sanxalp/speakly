@@ -30,33 +30,33 @@ export default function Dashboard() {
   const completedTasks = tasks.filter(t => t.status === "COMPLETED");
 
   return (
-    <div className="space-y-12">
-      <div className="pt-8 pb-12 border-b border-[#3a3a47]">
+    <div className="space-y-16">
+      <div className="pt-6 pb-14 border-b border-[#333333]">
         <VoiceRecorder onTaskAdded={fetchTasks} />
       </div>
 
-      <div className="space-y-10">
+      <div className="space-y-14">
         <div>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-[#f5f5f7]">
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-3xl font-light text-[#f5f5f5]">
               Active Tasks
             </h2>
-            <span className="bg-emerald-500/20 text-emerald-400 text-sm px-3 py-1.5 rounded-full border border-emerald-500/30 font-medium">{pendingTasks.length}</span>
+            <span className="bg-[#d4af37]/20 text-[#d4af37] text-sm px-4 py-2 rounded border border-[#d4af37]/30 font-light">{pendingTasks.length}</span>
           </div>
           {loading ? (
-             <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 text-[#6f7178] animate-spin" /></div>
+             <div className="flex justify-center p-16"><Loader2 className="w-8 h-8 text-[#707070] animate-spin" /></div>
           ) : (
             <TaskList tasks={pendingTasks} onTaskUpdate={fetchTasks} />
           )}
         </div>
 
         {completedTasks.length > 0 && (
-          <div className="pt-10 border-t border-[#3a3a47]">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-[#a8a8b0]">
+          <div className="pt-12 border-t border-[#333333]">
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-3xl font-light text-[#a8a8a8]">
                 Completed
               </h2>
-              <span className="text-[#6f7178] text-sm font-medium">{completedTasks.length}</span>
+              <span className="text-[#707070] text-sm font-light">{completedTasks.length}</span>
             </div>
              <TaskList tasks={completedTasks} onTaskUpdate={fetchTasks} />
           </div>
