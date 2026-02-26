@@ -143,35 +143,35 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
     <div className="w-full max-w-2xl mx-auto flex flex-col items-center">
       {/* Mic Button */}
       {!parsedTask && (
-        <div className="flex flex-col items-center space-y-6">
+        <div className="flex flex-col items-center space-y-8">
           <button
             onClick={toggleRecording}
             className={`relative group flex items-center justify-center w-32 h-32 rounded-full shadow-2xl transition-all duration-300 ${
               isRecording
-                ? "bg-red-500 hover:bg-red-600 scale-110 animate-pulse"
-                : "bg-emerald-500 hover:bg-emerald-600 hover:scale-105"
+                ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 scale-110 animate-pulse"
+                : "bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 hover:scale-105 hover:shadow-emerald-500/20"
             }`}
           >
             {isRecording ? (
-              <Square className="w-12 h-12 text-white fill-current" />
+              <Square className="w-12 h-12 text-white fill-current relative z-10" />
             ) : (
-              <Mic className="w-14 h-14 text-white" />
+              <Mic className="w-14 h-14 text-white relative z-10" />
             )}
             
             {/* Ripple effect when recording */}
             {isRecording && (
-                <div className="absolute inset-0 rounded-full border-4 border-red-500 opacity-50 animate-ping"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-red-400 opacity-50 animate-ping"></div>
             )}
           </button>
           
-          <p className="text-neutral-400 font-medium h-6">
-            {isRecording ? "Listening... Click square to stop." : "Tap to speak a new task"}
+          <p className="text-[#a8a8b0] font-medium h-6 text-center">
+            {isRecording ? "Listening... Click to stop." : "Tap mic to record a new task"}
           </p>
 
           {/* Transcript Preview */}
           {(transcript || isRecording) && (
-            <div className="w-full p-4 bg-neutral-900 border border-neutral-800 rounded-2xl italic text-emerald-400 text-center min-h-[4rem]">
-              "{transcript || "..."}"
+            <div className="w-full p-6 bg-[#262630] border border-[#3a3a47] rounded-xl italic text-emerald-400 text-center min-h-[5rem] flex items-center justify-center">
+              <span className="text-lg">"{transcript || "…"}"</span>
             </div>
           )}
         </div>
@@ -181,66 +181,71 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
       {isProcessing && !parsedTask && (
         <div className="flex flex-col items-center space-y-4 text-emerald-500 mt-8">
           <Loader2 className="w-10 h-10 animate-spin" />
-          <p className="animate-pulse">AI is parsing your task...</p>
+          <p className="text-[#a8a8b0] animate-pulse">AI is parsing your task...</p>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl w-full text-center">
-          {error}
-          <button onClick={() => setError(null)} className="ml-4 underline">Dismiss</button>
+        <div className="mt-4 p-4 bg-[#ef4444]/10 border border-[#ef4444]/20 text-[#fca5a5] rounded-lg w-full text-center text-sm flex items-center justify-between">
+          <span>{error}</span>
+          <button onClick={() => setError(null)} className="underline hover:no-underline text-xs ml-4">Dismiss</button>
         </div>
       )}
 
       {/* Review Card */}
       {parsedTask && !isProcessing && (
-        <div className="w-full bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Check className="text-emerald-500" /> Confirm Task Details
-          </h3>
+        <div className="w-full bg-[#1a1a21] border border-[#3a3a47] rounded-2xl p-8 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+              <Check className="text-emerald-400 w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-semibold text-[#f5f5f7]">
+              Confirm Task Details
+            </h3>
+          </div>
           
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Title</label>
+              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Title</label>
               <input
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Description</label>
+              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Description</label>
               <textarea
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 min-h-[80px]"
+                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all min-h-[100px]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-1">Due Date & Time</label>
+              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Due Date & Time</label>
               <input
                 type="datetime-local"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 [color-scheme:dark]"
+                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all [color-scheme:dark]"
               />
             </div>
           </div>
 
-          <div className="flex gap-3 mt-6">
+          <div className="flex gap-3 mt-8">
             <button
               onClick={() => { setParsedTask(null); setTranscript(""); }}
-              className="flex-1 bg-neutral-800 hover:bg-neutral-700 text-white font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="flex-1 bg-[#262630] hover:bg-[#3a3a47] text-[#f5f5f7] font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-[#3a3a47]"
             >
               <X className="w-5 h-5" /> Cancel
             </button>
             <button
               onClick={saveTask}
-              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30"
             >
               <Check className="w-5 h-5" /> Save Task
             </button>
