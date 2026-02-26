@@ -140,38 +140,38 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col items-center">
+    <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
       {/* Mic Button */}
       {!parsedTask && (
-        <div className="flex flex-col items-center space-y-8">
+        <div className="flex flex-col items-center space-y-12">
           <button
             onClick={toggleRecording}
-            className={`relative group flex items-center justify-center w-32 h-32 rounded-full shadow-2xl transition-all duration-300 ${
+            className={`relative group flex items-center justify-center w-36 h-36 rounded-full shadow-2xl transition-all duration-500 ${
               isRecording
-                ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 scale-110 animate-pulse"
-                : "bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 hover:scale-105 hover:shadow-emerald-500/20"
+                ? "bg-[#a8736b] hover:bg-[#b8836b] scale-110 animate-pulse"
+                : "bg-[#d4af37] hover:bg-[#e8c547] hover:scale-105 hover:shadow-[#d4af37]/30"
             }`}
           >
             {isRecording ? (
-              <Square className="w-12 h-12 text-white fill-current relative z-10" />
+              <Square className="w-14 h-14 text-[#0a0a0a] fill-current relative z-10" />
             ) : (
-              <Mic className="w-14 h-14 text-white relative z-10" />
+              <Mic className="w-16 h-16 text-[#0a0a0a] relative z-10" />
             )}
             
             {/* Ripple effect when recording */}
             {isRecording && (
-                <div className="absolute inset-0 rounded-full border-4 border-red-400 opacity-50 animate-ping"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-[#a8736b]/40 opacity-50 animate-ping"></div>
             )}
           </button>
           
-          <p className="text-[#a8a8b0] font-medium h-6 text-center">
-            {isRecording ? "Listening... Click to stop." : "Tap mic to record a new task"}
+          <p className="text-[#a8a8a8] font-light text-lg h-8 text-center tracking-wide">
+            {isRecording ? "Listening..." : "Tap to speak"}
           </p>
 
           {/* Transcript Preview */}
           {(transcript || isRecording) && (
-            <div className="w-full p-6 bg-[#262630] border border-[#3a3a47] rounded-xl italic text-emerald-400 text-center min-h-[5rem] flex items-center justify-center">
-              <span className="text-lg">"{transcript || "…"}"</span>
+            <div className="w-full p-8 bg-[#242424] border border-[#333333] rounded text-[#d4af37] text-center min-h-[6rem] flex items-center justify-center">
+              <span className="text-lg font-light italic">"{transcript || "…"}"</span>
             </div>
           )}
         </div>
@@ -179,15 +179,15 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
 
       {/* Loading State */}
       {isProcessing && !parsedTask && (
-        <div className="flex flex-col items-center space-y-4 text-emerald-500 mt-8">
-          <Loader2 className="w-10 h-10 animate-spin" />
-          <p className="text-[#a8a8b0] animate-pulse">AI is parsing your task...</p>
+        <div className="flex flex-col items-center space-y-6 mt-12">
+          <Loader2 className="w-8 h-8 text-[#d4af37] animate-spin" />
+          <p className="text-[#a8a8a8] animate-pulse font-light">Processing your task...</p>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="mt-4 p-4 bg-[#ef4444]/10 border border-[#ef4444]/20 text-[#fca5a5] rounded-lg w-full text-center text-sm flex items-center justify-between">
+        <div className="mt-6 p-5 bg-[#a8736b]/10 border border-[#a8736b]/30 text-[#d9a8a0] rounded w-full text-center text-sm flex items-center justify-between font-light">
           <span>{error}</span>
           <button onClick={() => setError(null)} className="underline hover:no-underline text-xs ml-4">Dismiss</button>
         </div>
@@ -195,59 +195,57 @@ export default function VoiceRecorder({ onTaskAdded }: { onTaskAdded: () => void
 
       {/* Review Card */}
       {parsedTask && !isProcessing && (
-        <div className="w-full bg-[#1a1a21] border border-[#3a3a47] rounded-2xl p-8 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
-              <Check className="text-emerald-400 w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-[#f5f5f7]">
-              Confirm Task Details
+        <div className="w-full bg-[#1a1a1a] border border-[#333333] rounded p-10 shadow-2xl animate-in slide-in-from-bottom-4 fade-in">
+          <div className="mb-8">
+            <h3 className="text-2xl font-light text-[#f5f5f5] mb-2">
+              Review Task
             </h3>
+            <div className="w-12 h-1 bg-[#d4af37]" />
           </div>
           
-          <div className="space-y-5">
+          <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Title</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Title</label>
               <input
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Description</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Description</label>
               <textarea
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
-                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all min-h-[100px]"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all min-h-[120px] font-light"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#a8a8b0] mb-2">Due Date & Time</label>
+              <label className="block text-xs font-light text-[#a8a8a8] mb-3 uppercase tracking-wide">Due Date & Time</label>
               <input
                 type="datetime-local"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
-                className="w-full bg-[#262630] border border-[#3a3a47] rounded-lg px-4 py-3 text-[#f5f5f7] placeholder-[#6f7178] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all [color-scheme:dark]"
+                className="w-full bg-[#242424] border border-[#333333] rounded px-4 py-3 text-[#f5f5f5] placeholder-[#707070] focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all font-light [color-scheme:dark]"
               />
             </div>
           </div>
 
-          <div className="flex gap-3 mt-8">
+          <div className="flex gap-4 mt-10">
             <button
               onClick={() => { setParsedTask(null); setTranscript(""); }}
-              className="flex-1 bg-[#262630] hover:bg-[#3a3a47] text-[#f5f5f7] font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-[#3a3a47]"
+              className="flex-1 bg-transparent border border-[#333333] hover:border-[#a8a8a8] text-[#a8a8a8] hover:text-[#f5f5f5] font-light py-3 rounded transition-all duration-300 flex items-center justify-center gap-2"
             >
-              <X className="w-5 h-5" /> Cancel
+              <X className="w-4 h-4" /> Cancel
             </button>
             <button
               onClick={saveTask}
-              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30"
+              className="flex-1 bg-[#d4af37] hover:bg-[#e8c547] text-[#0a0a0a] font-light py-3 rounded transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#d4af37]/20 hover:shadow-[#d4af37]/30"
             >
-              <Check className="w-5 h-5" /> Save Task
+              <Check className="w-4 h-4" /> Save Task
             </button>
           </div>
         </div>
